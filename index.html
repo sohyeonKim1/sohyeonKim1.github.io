@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>김소현</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <style>
+        h1 {
+            width: 100%;
+            height: 20px;
+            margin-top: 30px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        table {
+            width: 95%;
+            margin: 0 auto 50px;
+            border-right: 1px solid #303C4E;
+            border-bottom: 1px solid #303C4E;
+            border-left: 1px solid #303C4E;
+            font-size: 13px;
+        }
+
+        table thead {
+            background: #303C4E;
+            border-top: 2px solid #232323;
+            color: #fff;
+        }
+
+        table tbody tr {
+            border-top: 1px solid #303C4E
+        }
+
+        th,
+        td {
+            height: 30px;
+            padding: 5px 0;
+            border-left: 1px solid #303C4E
+        }
+
+        th+th,
+        td+td {
+            border-left: 1px solid #303C4E
+        }
+
+        td:first-child {
+            padding-left: 0;
+            text-align: center
+        }
+
+        td a {
+            display: block;
+            width: 100%;
+        }
+
+        .contact {
+            width: 95%;
+            height: 20px;
+            margin: 0 auto 10px;
+            text-align: right;
+            line-height: 20px;
+            font-size: 12px;
+        }
+
+        .fc_red {
+            color: red;
+        }
+
+        .fc_blue {
+            color: #673893;
+        }
+
+        table.center th,
+        table.center td {
+            text-align: center;
+            padding-left: 0
+        }
+
+        td.center {
+            text-align: center;
+            padding-left: 0
+        }
+
+        .txt_del {
+            text-decoration: line-through
+        }
+
+        .complete {
+            background-color: #f6ebff
+        }
+
+        .delete {
+            background-color: #eee
+        }
+        /* .tab-content {
+            display: none;
+        } */
+        .tab {
+            width: 95%;
+            margin: 0 auto 20px;
+        }
+        table th:nth-child(2),
+        table td:nth-child(2) {
+            padding-left: 1rem;
+            text-align: left;
+        }
+        table td:nth-child(6) {
+            /* font-weight: bold; */
+            color: red;
+        }
+        table td:nth-child(8) {
+            font-size: 12px;
+            text-align: left;
+            padding-left: 8px;
+        }
+
+        .error {
+            background: red;
+            color: white;
+        }
+    </style>
+    <script type="text/javascript" language="javascript" src="js/jquery-3.7.0.js"></script>
+</head>
+
+<body>
+    <h1>화면 퍼블리싱</h1>
+
+    <div class="contact">KSH</div>
+
+    <!-- <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Tab1')">탭 1</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab2')">탭 2</button>
+    </div> -->
+    <div id="Tab1" class="tab-content">
+    <table class="center">
+        <caption>index</caption>
+        <colgroup>
+            <col style="width: 3%">
+            <col style="width: auto">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 5%">
+            <col style="width: 15%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>NO</th>
+                <th>화면명</th>
+                <th>1024x768</th>
+                <th>fullHD</th>
+                <th>완료일</th>
+                <th>최종수정일(수정횟수)</th>
+                <th>Script</th>
+                <th>비고</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+    </div>
+</body>
+</html>
+
+<script>
+    var pageList = [{
+        pageName : "device_status",
+        link : "html/device_status.html",
+        link2 : "#",
+        date : "2023-12-28",
+        date2 : "",
+        updated: false,
+        script: true,
+        etc : ""
+    }, {
+        pageName : "로그인",
+        link : "html/로그인.html",
+        link2 : "#",
+        date : "2023-12-28",
+        date2 : "2024-03-12",
+        updated: false,
+        script: true,
+        etc : "팝업 스타일 수정"
+    }
+    
+];
+
+    $(document).ready(function() {
+        $.each(pageList, function(index, item) {
+            var $tr = $("<tr></tr>");
+            var noTd = $("<td>" + (index + 1) + "</td>");
+            var pageNameTd = $("<td>" + item.pageName + "</td>");
+            var linkTd = $("<td><a href='" + item.link + "' target='_blank'>" + '1024x768' + "</a></td>");
+            var linkTd2 = $("<td><a href='" + item.link2 + "' target='_blank'>" + 'fullHD' + "</a></td>");
+            var dateTd = $("<td>" + item.date + "</td>");
+            var dateTd2 = $("<td>" + item.date2 + "</td>");
+            var scriptTd = $("<td>" + (item.script ? 'O' : 'X') + "</td>");
+            if(!item.script) {
+                scriptTd.addClass('error');
+            }
+            var etcTd = $("<td>" + item.etc + "</td>");
+
+            $tr.append(noTd).append(pageNameTd).append(linkTd).append(linkTd2).append(dateTd).append(dateTd2).append(scriptTd).append(etcTd);
+
+            if(item.updated) {
+                $tr.addClass('complete');
+            }
+
+            $("#tableBody").append($tr);
+        });
+    });
+</script>
