@@ -1,10 +1,4 @@
 @import "reset.css";
-
-:root {
-    --min-td-width: 120px;
-    --columns: 3;
-}
-
 /* Layout */
 html * {
     --th-bg-color: #52555c;
@@ -316,7 +310,7 @@ body {
                 font-size: 2em;
             }
             .tit-sub {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
             .txt-sub {
                 margin-top: 12px;
