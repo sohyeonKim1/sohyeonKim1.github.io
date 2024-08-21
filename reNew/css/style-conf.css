@@ -327,10 +327,10 @@ body {
     padding: 0 20px;
   }
   .conf__header .tit-main {
-    font-size: 2em;
+    font-size: 2rem;
   }
   .conf__header .tit-sub {
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
   .conf__header .txt-sub {
     margin-top: 12px;
