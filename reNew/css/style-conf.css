@@ -70,12 +70,12 @@ body {
   line-height: 1.2em;
 }
 .conf__header .tit-main {
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 600;
   color: #ffbc00;
 }
 .conf__header .tit-sub {
-  font-size: 40px;
+  font-size: 1.8rem;
 }
 .conf__header .txt-sub {
   margin-top: 16px;
@@ -330,7 +330,7 @@ body {
     font-size: 2em;
   }
   .conf__header .tit-sub {
-    font-size: 1.6em;
+    font-size: 1.5em;
   }
   .conf__header .txt-sub {
     margin-top: 12px;
