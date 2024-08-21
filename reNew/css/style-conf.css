@@ -234,9 +234,6 @@ body {
   background: #f4f4f4;
   border-radius: 8px;
 }
-.table__wrap tbody tr td a:hover .conf-title {
-  text-decoration: underline;
-}
 .table__wrap tbody tr td a:hover::before {
   content: "";
   position: absolute;

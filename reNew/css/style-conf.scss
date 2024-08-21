@@ -239,9 +239,9 @@ body {
                         position: relative;
                         background: #f4f4f4;
                         border-radius: 8px;
-                        .conf-title {
-                            text-decoration: underline;
-                        }
+                        // .conf-title {
+                        //     text-decoration: underline;
+                        // }
                     }
                     a:hover::before {
                         content: '';
