@@ -1,9 +1,5 @@
 @import "reset.css";
 
-:root {
-    --min-td-width: 120px;
-    --columns: 3;
-}
 
 /* Layout */
 html * {
@@ -86,6 +82,7 @@ body {
         }
     }
     &__body {
+        // position: relative;
         width: 90%;
         margin: 0 auto 140px;
         padding: 40px;
@@ -113,6 +110,31 @@ body {
     }
 }
 
+@keyframes blink-animation {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.arr-scroll {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    border-radius: 60px;
+    background: rgba($color: #000, $alpha: 0.4) url('../images/ico-arr.png') no-repeat center center;
+    background-size: 24px auto;
+    animation: blink-animation 2s steps(20, start) forwards; //infinite
+    z-index: 11;
+}
 .table {
     &__wrap {
         width: 100%;
@@ -122,6 +144,7 @@ body {
             border-collapse: separate;
             border-spacing: 0;
         }
+        
         .conf-title {
             font-size: 18px;
             font-weight: 500;
@@ -142,7 +165,8 @@ body {
                 width: 100%;
             }
             td:first-child {
-                // width: 200px;
+                width: 150px;
+                padding: 4px 0;
                 position: sticky;
                 left: 0;
                 z-index: 1;
@@ -187,16 +211,20 @@ body {
                 padding: 8px 0;
                 border-bottom: 1px solid #ddd;
                 td:first-child {
-                    background: #fff;
+                    background: #f8f8f8;
                 }
                 td {
                     display: flex;
                     flex-wrap: wrap;
+                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     padding-right: 4px;
                     padding-left: 4px;
-                    font-size: 20px;
+                    font-size: 20px;  
+                    &.merge-cell {
+                        width: calc(100% - 150px);
+                    }            
                     span {
                         display: block;
                         width: 100%;
@@ -239,6 +267,11 @@ body {
                         background: #ddd;
                     }
                 }
+                td:first-child + td {
+                    &::before {
+                        background: transparent;
+                    }
+                }
             }
         }
     }
@@ -275,11 +308,8 @@ body {
 .bold {
     font-weight: bold;
 }
-// #mergeCell {
-//     width: 100%;
-// }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1024px) {
     //tablet, mobile
     body {
         font-size: 14px;
@@ -324,6 +354,7 @@ body {
             }
         }
         &__body {
+            
             width: 100%;
             margin: 0 auto 100px;
             padding: 20px 0;
@@ -340,16 +371,25 @@ body {
             }
         }
     }
-    .table{
+    .arr-scroll {
+        display: block;
+    }
+    .table {
         &__wrap {
+            position: relative;
             overflow-x: auto;
             table {
-                display: grid;
-                grid-template-columns: repeat(auto-fil, minmax(var(--min-td-width), 1fr));
                 width: 100%;
-                min-width: calc(var(--min-td-width) * var(--columns)); 
+            }
+            tr {
+                display: flex;
+                gap: 8px;
+                width: 100%;
                 td {
-                    min-width: var(--min-td-width);
+                    width: 100%;
+                }
+                td:first-child {
+                    width: 100px;
                 }
             }
             thead {
@@ -369,6 +409,9 @@ body {
                 tr {
                     td {
                         font-size: 14px;
+                        &.merge-cell {
+                            width: calc(100% - 100px);
+                        } 
                         a {
                             padding: 4px;
                         }

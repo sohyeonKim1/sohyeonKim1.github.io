@@ -12,7 +12,7 @@
 <body>
     <div class="wrap">
         <div class="bg">
-            <img src="reNew/images/topimg.png" alt="" class="bg-img-blur">
+            <img src="../reNew/images/topimg.png" alt="" class="bg-img-blur">
         </div>
         <div class="conf__wrap">
             <div class="conf__header">
@@ -22,6 +22,8 @@
             </div>
             <div class="conf__body">
                 <div class="table__wrap">
+                    <!-- 20240821 추가 -->
+                    <div class="arr-scroll"></div>
                     <table>
                         <thead>
                             <tr>
@@ -34,7 +36,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>09:10</td>
+                                <td>
+                                    <span>09:10</span>
+                                    <span>~</span>
+                                    <span>10:00</span>
+                                </td>
                                 <td>-</td>
                                 <td>
                                     <a href="#">
@@ -56,12 +62,21 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="5" id="mergeCell">
+                                <td>
+                                    <span>09:10</span>
+                                    <span>~</span>
+                                    <span>10:00</span>
+                                </td>
+                                <td colspan="4" class="merge-cell">
                                     COFFEE BREAK
                                 </td>
                             </tr>
                             <tr>
-                                <td>09:10</td>
+                                <td>
+                                    <span>09:10</span>
+                                    <span>~</span>
+                                    <span>10:00</span>
+                                </td>
                                 <td>-</td>
                                 <td>
                                     <a href="#">
@@ -87,7 +102,7 @@
                 </div>
                 <div class="h2">찾아오시는 길</div>
                 <div class="map__wrap">
-                    <img src="reNew/images/map.png" alt="">
+                    <img src="../reNew/images/map.png" alt="">
                 </div>
                 <div class="map__txt">
                     <div>
@@ -98,7 +113,6 @@
                         <span class="label">문의</span>
                         <span>02-0000-0000</span>
                     </div>
-
                 </div>
             </div>
             <div class="conf__footer">
@@ -109,29 +123,41 @@
 </body>
 
 <script>
-    function adjustTableWidth() {
-        var $tdElements = $('table tr:first-child td');
-        // var $tdElements = $('table tr td');
-        var tdCount = $tdElements.length;
-        var containerWidth = $('.table__wrap').width();
-        var minTdWidth = containerWidth / tdCount;
+    function adjustTable() {
+        var $tableWrap = $('.table__wrap');
+        var $table = $tableWrap.find('table');
+        var $firstTd = $table.find('tr td:first-child');
+        var $otherTds = $table.find('tr td:not(:first-child):not(.merge-cell)');
+        var tableWrapWidth = $tableWrap.width();
+        var windowWidth = $(window).width();
+        var tdCount = $table.find('tr:first-child td').length;
 
-        if (tdCount > 5) {
-            $tdElements.css('min-width', minTdWidth + 'px');
-            $('.table__wrap').css('overflow-x', 'auto');
-        } else {
-            $tdElements.css('min-width', (100 / tdCount) + '%');
-            $('.table__wrap').css('overflow-x', 'hidden');
+        if (windowWidth <= 1024) { // 모바일
+            $otherTds.css('width', (windowWidth / 3.2) + 'px');
+        } else { // 데스크탑
+            if (tdCount > 5) {
+                $tableWrap.css('overflow-x', 'auto');
+                $otherTds.css('width', ((tableWrapWidth - 150 - 32) / 4) + 'px');
+            } else {
+                $tableWrap.css('overflow-x', 'hidden');
+                $otherTds.css('width', (tableWrapWidth / (tdCount - 1)) + 'px');
+            }
         }
     }
 
-    adjustTableWidth();
-
-    $(window).resize(function(){
-        var deviceWidth = $(window).width();
-        var calculateWidth = (deviceWidth - 16) / 3;
-        document.documentElement.style.setProperty('--min-td-width', calculateWidth + 'px');
+    // 윈도우 크기 변경 시 테이블 너비 조정
+    $(window).resize(function () {
+        adjustTable();
     });
+
+    // 초기 테이블 너비 설정
+    adjustTable();
+
+    function setPosition() {
+        var leftPosition = $(window).width() - 40;
+        $('.arr-scroll').css('left', leftPosition);
+    }
+
 </script>
 
 </html>

@@ -1,9 +1,4 @@
 @import "reset.css";
-:root {
-  --min-td-width: 120px;
-  --columns: 3;
-}
-
 /* Layout */
 html * {
   --th-bg-color: #52555c;
@@ -27,6 +22,7 @@ body {
   line-height: 1.3em;
   padding: 0;
   margin: 0;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -47,8 +43,7 @@ body {
 .bg .bg-img-blur {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   filter: blur(5px);
 }
 
@@ -113,6 +108,32 @@ body {
   background-size: 168px auto;
 }
 
+@keyframes blink-animation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.arr-scroll {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  border-radius: 60px;
+  background: rgba(0, 0, 0, 0.4) url("../images/ico-arr.png") no-repeat center center;
+  background-size: 24px auto;
+  animation: blink-animation 2s steps(20, start) forwards;
+  z-index: 11;
+}
+
 .table__wrap {
   width: 100%;
   overflow-x: hidden;
@@ -142,6 +163,8 @@ body {
   width: 100%;
 }
 .table__wrap tr td:first-child {
+  width: 150px;
+  padding: 4px 0;
   position: sticky;
   left: 0;
   z-index: 1;
@@ -181,16 +204,20 @@ body {
   border-bottom: 1px solid #ddd;
 }
 .table__wrap tbody tr td:first-child {
-  background: #fff;
+  background: #f8f8f8;
 }
 .table__wrap tbody tr td {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-right: 4px;
   padding-left: 4px;
   font-size: 20px;
+}
+.table__wrap tbody tr td.merge-cell {
+  width: calc(100% - 150px);
 }
 .table__wrap tbody tr td span {
   display: block;
@@ -233,6 +260,9 @@ body {
   height: calc(100% - 16px);
   background: #ddd;
 }
+.table__wrap tbody tr td:first-child + td::before {
+  background: transparent;
+}
 
 .h2 {
   margin-top: 40px;
@@ -267,7 +297,7 @@ body {
   font-weight: bold;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1024px) {
   body {
     font-size: 14px;
   }
@@ -323,17 +353,26 @@ body {
     background: url("../images/logo-new.png") no-repeat;
     background-size: 120px auto;
   }
+  .arr-scroll {
+    display: block;
+  }
   .table__wrap {
+    position: relative;
     overflow-x: auto;
   }
   .table__wrap table {
-    display: grid;
-    grid-template-columns: repeat(auto-fil, minmax(var(--min-td-width), 1fr));
     width: 100%;
-    min-width: calc(var(--min-td-width) * var(--columns));
   }
-  .table__wrap table td {
-    min-width: var(--min-td-width);
+  .table__wrap tr {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+  .table__wrap tr td {
+    width: 100%;
+  }
+  .table__wrap tr td:first-child {
+    width: 100px;
   }
   .table__wrap thead tr td {
     height: 48px;
@@ -344,6 +383,9 @@ body {
   }
   .table__wrap tbody tr td {
     font-size: 14px;
+  }
+  .table__wrap tbody tr td.merge-cell {
+    width: calc(100% - 100px);
   }
   .table__wrap tbody tr td a {
     padding: 4px;
