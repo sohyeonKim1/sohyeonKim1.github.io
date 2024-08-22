@@ -90,6 +90,23 @@ body {
         .cont-center {
             padding: 40px;
         }
+        .btn-area {
+            width: 100%;
+            margin: 20px 0;
+            text-align: right;
+        }
+        .btn-pdf {
+            width: max-content;
+            height: 40px;
+            padding: 0 15px;
+            background: var(--point-color);
+            border-radius: 4px;
+            font-weight: 500;
+            color: #000;
+            &:active {
+                opacity: .8;
+            }
+        }
     }
     &__footer {
         position: absolute;
@@ -165,7 +182,7 @@ body {
                 width: 100%;
             }
             td:first-child {
-                width: 150px;
+                width: 10%;
                 padding: 4px 0;
                 position: sticky;
                 left: 0;
@@ -223,7 +240,7 @@ body {
                     padding-left: 4px;
                     font-size: 20px;  
                     &.merge-cell {
-                        width: calc(100% - 150px);
+                        width: 90%;
                     }            
                     span {
                         display: block;
@@ -243,17 +260,17 @@ body {
                         //     text-decoration: underline;
                         // }
                     }
-                    a:hover::before {
-                        content: '';
-                        position: absolute;
-                        top: calc(50% - 20px);
-                        right: 20px;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        background: var(--point-color) url('../images/ico-arr.png')no-repeat center center;
-                        background-size: 18px auto;
-                    }
+                    // a:hover::before {
+                    //     content: ' ';
+                    //     position: absolute;
+                    //     top: calc(50% - 20px);
+                    //     right: 20px;
+                    //     width: 40px;
+                    //     height: 40px;
+                    //     border-radius: 50%;
+                    //     background: var(--point-color) url('../images/ico-arr.png')no-repeat center center;
+                    //     background-size: 18px auto;
+                    // }
                 }
                 td + td {
                     position: relative;
@@ -441,3 +458,57 @@ body {
         }
     }
 }
+@media print {
+    .table {
+        &__wrap {
+            overflow-x: hidden;
+            table {
+                width: 100%;
+            }
+            tr {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+                td {
+                    width: 100%;
+                }
+                td:first-child {
+                    width: 100px;
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        &.merge-cell {
+                            width: calc(100% - 100px);
+                        } 
+                        a {
+                            padding: 4px;
+                        }
+                        a:hover {
+                            background: none;
+                            .conf-title {
+                                text-decoration: none;
+                            }
+                        }
+                        a:active {
+                            position: relative;
+                            background: #f4f4f4;
+                            border-radius: 8px;
+                        }
+                        a:hover::before {
+                            background: none;
+                        }
+                    }
+                }
+            }
+            .conf-title {
+                font-size: 14px;
+            }
+            .conf-speaker {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
