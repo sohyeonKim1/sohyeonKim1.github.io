@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import "reset.css";
 /* Layout */
 html * {
@@ -96,6 +97,9 @@ body {
   text-align: right;
 }
 .conf__body .btn-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: max-content;
   height: 40px;
   padding: 0 15px;
@@ -151,6 +155,19 @@ body {
   z-index: 11;
 }
 
+.conf-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  letter-spacing: -0.5px;
+}
+
+.conf-speaker {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #4a4a4a;
+}
+
 .table__wrap {
   width: 100%;
   overflow-x: hidden;
@@ -159,17 +176,6 @@ body {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-}
-.table__wrap .conf-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #000;
-  letter-spacing: -0.5px;
-}
-.table__wrap .conf-speaker {
-  margin-top: 8px;
-  font-size: 18px;
-  color: #4a4a4a;
 }
 .table__wrap tr {
   display: flex;
@@ -300,6 +306,22 @@ body {
   font-weight: bold;
 }
 
+@media (pointer: coarse) {
+  /* 터치와 같은 포인터 장치에서 적용되는 스타일 */
+  .table__wrap {
+    width: 100%;
+    overflow-x: hidden;
+  }
+  .table__wrap tr td {
+    width: auto;
+  }
+  .table__wrap tr td:first-child {
+    width: auto;
+  }
+  .arr-scroll {
+    display: none;
+  }
+}
 @media screen and (max-width: 1024px) {
   body {
     font-size: 14px;
@@ -386,51 +408,6 @@ body {
   }
   .table__wrap tbody tr td {
     font-size: 14px;
-  }
-  .table__wrap tbody tr td.merge-cell {
-    width: calc(100% - 100px);
-  }
-  .table__wrap tbody tr td a {
-    padding: 4px;
-  }
-  .table__wrap tbody tr td a:hover {
-    background: none;
-  }
-  .table__wrap tbody tr td a:hover .conf-title {
-    text-decoration: none;
-  }
-  .table__wrap tbody tr td a:active {
-    position: relative;
-    background: #f4f4f4;
-    border-radius: 8px;
-  }
-  .table__wrap tbody tr td a:hover::before {
-    background: none;
-  }
-  .table__wrap .conf-title {
-    font-size: 14px;
-  }
-  .table__wrap .conf-speaker {
-    font-size: 12px;
-  }
-}
-@media print {
-  .table__wrap {
-    overflow-x: hidden;
-  }
-  .table__wrap table {
-    width: 100%;
-  }
-  .table__wrap tr {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-  }
-  .table__wrap tr td {
-    width: 100%;
-  }
-  .table__wrap tr td:first-child {
-    width: 100px;
   }
   .table__wrap tbody tr td.merge-cell {
     width: calc(100% - 100px);

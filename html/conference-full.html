@@ -22,9 +22,7 @@
             </div>
 
             <div class="conf__body">
-                <div class="table__wrap" id="downloadArea">
-                    <!-- 20240821 추가 -->
-                    <div class="arr-scroll"></div>
+                <div class="table__wrap">
                     <table>
                         <thead>
                             <tr>
@@ -33,6 +31,7 @@
                                 <td>섹션2</td>
                                 <td>섹션3</td>
                                 <td>섹션4</td>
+                                <td>섹션5</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +60,12 @@
                                         <span class="conf-speaker">김상훈, 정형주</span>
                                     </a>
                                 </td>
+                                <td>
+                                    <a href="#">
+                                        <span class="conf-title">자산배분, ETF</span>
+                                        <span class="conf-speaker">김상훈, 정형주</span>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -68,67 +73,12 @@
                                     <span>~</span>
                                     <span>10:00</span>
                                 </td>
-                                <td colspan="4" class="merge-cell">
+                                <td colspan="5" class="merge-cell">
                                     COFFEE BREAK
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>09:10</span>
-                                    <span>~</span>
-                                    <span>10:00</span>
-                                </td>
-                                <td>-</td>
-                                <td>
-                                    <a href="#">
-                                        <span class="conf-title">텍스트최대길이테스트텍스트최대길이테스트</span>
-                                        <span class="conf-speaker">김상훈, 정형주</span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        <span class="conf-title">자산배분, ETF</span>
-                                        <span class="conf-speaker">김상훈, 정형주</span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        <span class="conf-title">자산배분, ETF</span>
-                                        <span class="conf-speaker">김상훈, 정형주</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>09:10</span>
-                                    <span>~</span>
-                                    <span>10:00</span>
-                                </td>
-                                <td>-</td>
-                                <td>
-                                    <a href="#">
-                                        <span class="conf-title">텍스트최대길이테스트텍스트최대길이테스트</span>
-                                        <span class="conf-speaker">김상훈, 정형주</span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        <span class="conf-title">자산배분, ETF</span>
-                                        <span class="conf-speaker">김상훈, 정형주</span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        <span class="conf-title">자산배분, ETF</span>
-                                        <span class="conf-speaker">김상훈, 정형주</span>
-                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="btn-area">
-                    <a href="conference-full.html" target="_blank" class="btn-pdf" rel="">전체화면보기</a>
                 </div>
                 <div class="h2">찾아오시는 길</div>
                 <div class="map__wrap">
@@ -153,43 +103,49 @@
 </body>
 
 <script>
-    
-    function adjustTable() {
-        var $tableWrap = $('.table__wrap');
-        var $table = $tableWrap.find('table');
-        var $firstTd = $table.find('tr td:first-child');
-        var $otherTds = $table.find('tr td:not(:first-child):not(.merge-cell)');
-        var tableWrapWidth = $tableWrap.width();
-        var windowWidth = $(window).width();
-        var tdCount = $table.find('tr:first-child td').length;
+    $(document).ready(function() {
+        function adjustTableColumns() {
+            var $table = $('.table__wrap table');
+            var totalColumns = 0;
+            var totalWidth = $table.width();
+            
+            // Find the maximum column count across all rows
+            $table.find('tr').each(function() {
+                var row = $(this);
+                var cellCount = 0;
+                row.find('th, td').each(function() {
+                    cellCount += parseInt($(this).attr('colspan') || 1, 10);
+                });
+                totalColumns = Math.max(totalColumns, cellCount);
+            });
 
-        if (windowWidth <= 1024) { // 모바일
-            $otherTds.css('width', (windowWidth / 3.2) + 'px');
-        } else { // 데스크탑
-            if (tdCount > 5) {
-                $tableWrap.css('overflow-x', 'auto');
-                $otherTds.css('width', ((90 / 4)) + '%');
-            } else {
-                $tableWrap.css('overflow-x', 'hidden');
-                $otherTds.css('width', (tableWrapWidth / (tdCount - 1)) + '%');
-            }
+            // Calculate column width for non-merged cells
+            var columnWidth = totalWidth / totalColumns;
+            
+            // Apply width to all cells, including merged cells
+            $table.find('th, td').each(function() {
+                var $cell = $(this);
+                var colspan = parseInt($cell.attr('colspan') || 1, 10);
+                
+                if (colspan > 1) {
+                    $cell.css('width', columnWidth * colspan);
+                } else {
+                    $cell.css('width', columnWidth);
+                }
+            });
+
+            // Ensure the table width does not exceed the container width
+            $table.css('table-layout', 'fixed');
         }
-    }
 
-    // 윈도우 크기 변경 시 테이블 너비 조정
-    $(window).resize(function () {
-        adjustTable();
+        // Adjust table columns on document ready
+        adjustTableColumns();
+
+        // Optional: Adjust table columns on window resize
+        $(window).resize(function() {
+            adjustTableColumns();
+        });
     });
-
-    // 초기 테이블 너비 설정
-    adjustTable();
-    
-
-    function setPosition() {
-        var leftPosition = $(window).width() - 40;
-        $('.arr-scroll').css('left', leftPosition);
-    }
 </script>
-
 
 </html>

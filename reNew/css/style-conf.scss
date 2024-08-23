@@ -96,6 +96,9 @@ body {
             text-align: right;
         }
         .btn-pdf {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: max-content;
             height: 40px;
             padding: 0 15px;
@@ -152,6 +155,19 @@ body {
     animation: blink-animation 2s steps(20, start) forwards; //infinite
     z-index: 11;
 }
+.conf-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: -.5px;
+    // white-space: wrap;
+}
+.conf-speaker {
+    margin-top: 8px;
+    font-size: 18px;
+    color: #4a4a4a;
+}
+
 .table {
     &__wrap {
         width: 100%;
@@ -160,19 +176,6 @@ body {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-        }
-        
-        .conf-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: #000;
-            letter-spacing: -.5px;
-            // white-space: wrap;
-        }
-        .conf-speaker {
-            margin-top: 8px;
-            font-size: 18px;
-            color: #4a4a4a;
         }
         tr {
             display: flex;
@@ -325,12 +328,33 @@ body {
 .bold {
     font-weight: bold;
 }
+@media (pointer: coarse) {
+    /* 터치와 같은 포인터 장치에서 적용되는 스타일 */
+    .table {
+        &__wrap {
+            width: 100%;
+            overflow-x: hidden;
+            tr {
+                td {
+                    width: auto;
+                    &:first-child {
+                        width: auto;
+                    }
+                }
+            }
+        }
+    }
+    .arr-scroll {
+        display: none;
+    }
+}
 
 @media screen and (max-width: 1024px) {
     //tablet, mobile
     body {
         font-size: 14px;
     }
+    
     .bg {
         display: flex;
         justify-content: center;
@@ -391,6 +415,7 @@ body {
     .arr-scroll {
         display: block;
     }
+    
     .table {
         &__wrap {
             position: relative;
@@ -458,57 +483,5 @@ body {
         }
     }
 }
-@media print {
-    .table {
-        &__wrap {
-            overflow-x: hidden;
-            table {
-                width: 100%;
-            }
-            tr {
-                display: flex;
-                gap: 8px;
-                width: 100%;
-                td {
-                    width: 100%;
-                }
-                td:first-child {
-                    width: 100px;
-                }
-            }
-            tbody {
-                tr {
-                    td {
-                        &.merge-cell {
-                            width: calc(100% - 100px);
-                        } 
-                        a {
-                            padding: 4px;
-                        }
-                        a:hover {
-                            background: none;
-                            .conf-title {
-                                text-decoration: none;
-                            }
-                        }
-                        a:active {
-                            position: relative;
-                            background: #f4f4f4;
-                            border-radius: 8px;
-                        }
-                        a:hover::before {
-                            background: none;
-                        }
-                    }
-                }
-            }
-            .conf-title {
-                font-size: 14px;
-            }
-            .conf-speaker {
-                font-size: 12px;
-            }
-        }
-    }
-}
+
 
