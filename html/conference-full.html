@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2024 KB ANALYST DAY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="../reNew/js/lib/jquery-1.12.4.js"></script>
-    <link rel="stylesheet" href="../reNew/css/style-conf.css">
+    <link rel="stylesheet" href="../reNew/css/style-conf-1.css">
 </head>
 
 <body>
@@ -68,7 +69,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="merge-th">
                                     <span>09:10</span>
                                     <span>~</span>
                                     <span>10:00</span>
@@ -103,49 +104,30 @@
 </body>
 
 <script>
-    $(document).ready(function() {
-        function adjustTableColumns() {
-            var $table = $('.table__wrap table');
-            var totalColumns = 0;
-            var totalWidth = $table.width();
-            
-            // Find the maximum column count across all rows
-            $table.find('tr').each(function() {
-                var row = $(this);
-                var cellCount = 0;
-                row.find('th, td').each(function() {
-                    cellCount += parseInt($(this).attr('colspan') || 1, 10);
-                });
-                totalColumns = Math.max(totalColumns, cellCount);
-            });
+    //PC버전 스케일
+    function adjustScale() {
+        const deviceWidth = window.innerWidth;
+        const contentWidth = 1200;
 
-            // Calculate column width for non-merged cells
-            var columnWidth = totalWidth / totalColumns;
-            
-            // Apply width to all cells, including merged cells
-            $table.find('th, td').each(function() {
-                var $cell = $(this);
-                var colspan = parseInt($cell.attr('colspan') || 1, 10);
-                
-                if (colspan > 1) {
-                    $cell.css('width', columnWidth * colspan);
-                } else {
-                    $cell.css('width', columnWidth);
-                }
-            });
+        const scale = deviceWidth / contentWidth;
+        document.body.style.transform = `scale(${scale})`;
+        document.body.style.transformOrigin = "top left";
+        document.body.style.width = `${contentWidth}px`;
+        document.body.style.height = "auto";
+        document.body.style.overflowX = "hidden";
+    }
 
-            // Ensure the table width does not exceed the container width
-            $table.css('table-layout', 'fixed');
-        }
+    window.onload = adjustScale;
+    window.onresize = adjustScale;
 
-        // Adjust table columns on document ready
-        adjustTableColumns();
+    //셀 병합 시 td 너비 잡기
+    var siblingTds = $('.merge-th').closest('tr').prev('tr').children('td');
 
-        // Optional: Adjust table columns on window resize
-        $(window).resize(function() {
-            adjustTableColumns();
-        });
+    var totalWidth = 0;
+    siblingTds.each(function() {
+        totalWidth += $(this).outerWidth();
     });
-</script>
 
+    $('td.merge-th').css('width', totalWidth);
+</script>
 </html>
